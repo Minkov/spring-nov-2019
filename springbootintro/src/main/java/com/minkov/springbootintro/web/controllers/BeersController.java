@@ -4,6 +4,7 @@ import com.minkov.springbootintro.services.services.BeersService;
 import com.minkov.springbootintro.web.models.BeerViewModel;
 import com.minkov.springbootintro.web.models.CreateBeerViewModel;
 import org.modelmapper.ModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,15 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Controller
 public class BeersController {
     private final BeersService beersService;
     private final ModelMapper mapper;
-
-    public BeersController(BeersService beersService, ModelMapper mapper) {
-        this.beersService = beersService;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/")
     public ModelAndView getAllBeers(ModelAndView modelAndView) {
