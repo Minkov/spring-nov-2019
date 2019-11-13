@@ -10,8 +10,6 @@ import com.minkov.heroes.services.services.HashingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class AuthServiceImpl implements AuthService {
     private final AuthValidationService authValidationService;
@@ -45,16 +43,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginUserServiceModel login(RegisterUserServiceModel serviceModel) throws Exception {
         String passwordHash = hashingService.hash(serviceModel.getPassword());
-        Optional<User> userOptional = usersRepository.findByUsernameAndPassword(serviceModel.getUsername(), passwordHash);
-        if (userOptional.isEmpty()) {
-            throw new Exception("Invalid user");
-        }
+        return usersRepository
+                .findByUsernameAndPassword(serviceModel.getUsername(), passwordHash)
+                .map(user -> {
+                    String heroName = user.getHero() == null
+                            ? null
+                            : user.getHero().getName();
 
-        User user = userOptional.get();
-        String heroName = user.getHero() == null
-                ? null
-                : user.getHero().getName();
-
-        return new LoginUserServiceModel(serviceModel.getUsername(), heroName);
+                    return new LoginUserServiceModel(serviceModel.getUsername(), heroName);
+                })
+                .orElseThrow(() -> new Exception("Invalid user"));
     }
 }
