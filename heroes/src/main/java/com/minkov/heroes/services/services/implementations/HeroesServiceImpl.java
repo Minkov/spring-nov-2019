@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.models.Slot;
+import com.minkov.heroes.services.factories.HeroesFactory;
+import com.minkov.heroes.services.models.HeroCreateServiceModel;
 import com.minkov.heroes.services.models.HeroItemServiceModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,12 @@ import com.minkov.heroes.services.services.HeroesService;
 @Service
 public class HeroesServiceImpl implements HeroesService {
     private final HeroesRepository heroesRepository;
+    private final HeroesFactory heroesFactory;
     private final ModelMapper mapper;
 
-    public HeroesServiceImpl(HeroesRepository heroesRepository, ModelMapper mapper) {
+    public HeroesServiceImpl(HeroesRepository heroesRepository, HeroesFactory heroesFactory, ModelMapper mapper) {
         this.heroesRepository = heroesRepository;
+        this.heroesFactory = heroesFactory;
         this.mapper = mapper;
     }
 
@@ -42,6 +46,13 @@ public class HeroesServiceImpl implements HeroesService {
         serviceModel.setPauldrons(getItemBySlot(hero.getItems(), Slot.PAULDRON));
 
         return serviceModel;
+    }
+
+    @Override
+    public Hero create(HeroCreateServiceModel serviceModel) {
+        Hero hero = heroesFactory.create(serviceModel.getName(), serviceModel.getGender());
+        heroesRepository.save(hero);
+        return hero;
     }
 
     private HeroItemServiceModel getItemBySlot(List<Item> items, Slot slot) {

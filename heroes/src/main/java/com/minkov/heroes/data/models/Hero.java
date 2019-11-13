@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "heroes")
 public class Hero extends BaseEntity {
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Enumerated(EnumType.STRING)
