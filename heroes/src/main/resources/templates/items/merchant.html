@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:include="~{_shared/head}"/>
+<body>
+<th:block th:include="~{_shared/header}"/>
+
+<main class="container">
+    <h1 class="text-center">Merchant</h1>
+    <hr class="hr-3"/>
+    <table class="table bg-blur">
+        <thead>
+        <tr>
+            <th scope="col" class="font-weight-bold">Name</th>
+            <th scope="col">Slot</th>
+            <th scope="col">Stamina</th>
+            <th scope="col">Strength</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Defence</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Relentless</td>
+            <td>PADS</td>
+            <td>25</td>
+            <td>22</td>
+            <td>0</td>
+            <td>60</td>
+            <td>
+                <form action="/items/merchant/Relentless" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>DragonScale</td>
+            <td>HELMET</td>
+            <td>15</td>
+            <td>10</td>
+            <td>0</td>
+            <td>40</td>
+            <td>
+                <form action="/items/merchant/DragonScale" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Wrathfull</td>
+            <td>PAULDRON</td>
+            <td>45</td>
+            <td>30</td>
+            <td>0</td>
+            <td>80</td>
+            <td>
+                <form action="/items/merchant/Wrathfull" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Furious</td>
+            <td>GAUNTLETS</td>
+            <td>15</td>
+            <td>20</td>
+            <td>0</td>
+            <td>30</td>
+            <td>
+                <form action="/items/merchant/Furious" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Glorenzelg</td>
+            <td>WEAPON</td>
+            <td>40</td>
+            <td>60</td>
+            <td>80</td>
+            <td>0</td>
+            <td>
+                <form action="/items/merchant/Glorenzelg" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+    <footer class="footer bg-dark  py-2">
+        <div class="container-fluid text-center">
+            <div class="footer-background h5 text-white">
+                &#169; CopyRight Victorious Arena. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

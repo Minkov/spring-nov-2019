@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:include="~{_shared/head}"/>
+<body>
+<th:block th:include="~{_shared/header}"/>
+<main>
+    <div class="text-center mb-3">
+        <h4 class="text-white mt-2">Welcome to the arena, [[${session.user.username}]]</h4>
+    </div>
+    <hr class="my-3"/>
+    <div class="container">
+        <div class="text-center">
+            <h2>User, you don't have a hero. Click below and create one.</h2>
+            <a href="/heroes/create" class="btn btn-secondary">Create hero</a>
+        </div>
+
+    </div>
+</main>
+<footer class="footer bg-dark  py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background h5 text-white">
+            &#169; CopyRight Victorious Arena. All rights reserved.
+        </div>
+    </div>
+</footer>
+</body>
+</html>
