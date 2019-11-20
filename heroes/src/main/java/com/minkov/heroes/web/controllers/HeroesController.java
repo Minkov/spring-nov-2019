@@ -1,12 +1,15 @@
 package com.minkov.heroes.web.controllers;
 
+import com.minkov.heroes.errors.HeroNotFoundException;
 import com.minkov.heroes.services.models.HeroCreateServiceModel;
 import com.minkov.heroes.services.models.HeroDetailsServiceModel;
+import com.minkov.heroes.services.models.LoginUserServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 import com.minkov.heroes.services.services.UsersService;
 import com.minkov.heroes.web.controllers.base.BaseController;
 import com.minkov.heroes.web.models.HeroCreateModel;
 import com.minkov.heroes.web.models.HeroDetailsViewModel;
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +56,21 @@ public class HeroesController extends BaseController {
         String username = getUsername(session);
 
         HeroCreateServiceModel serviceModel = mapper.map(hero, HeroCreateServiceModel.class);
-        usersService.createHeroForUser(username, serviceModel);
-        return "redirect:/heroes/details/" + hero.getName();
+        try {
+            usersService.createHeroForUser(username, serviceModel);
+            LoginUserServiceModel loginUserServiceModel = new LoginUserServiceModel(username, hero.getName());
+            session.setAttribute("user", loginUserServiceModel);
+            return "redirect:/heroes/details/" + hero.getName();
+        } catch (Exception ex) {
+            return "redirect:/heroes/create";
+        }
+    }
+
+    @ExceptionHandler(HeroNotFoundException.class)
+    public ModelAndView handleException(HeroNotFoundException exception) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("message", exception.getMessage());
+
+        return modelAndView;
     }
 }

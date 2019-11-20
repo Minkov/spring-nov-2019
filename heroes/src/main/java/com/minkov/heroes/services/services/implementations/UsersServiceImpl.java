@@ -2,6 +2,7 @@ package com.minkov.heroes.services.services.implementations;
 
 import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.models.User;
+import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.UsersRepository;
 import com.minkov.heroes.services.models.HeroCreateServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Service;
 public class UsersServiceImpl implements UsersService {
     private final HeroesService heroesService;
     private final UsersRepository usersRepository;
+    private final HeroesRepository heroesRepository;
     private final ModelMapper mapper;
 
-    public UsersServiceImpl(HeroesService heroesService, UsersRepository usersRepository, ModelMapper mapper) {
+    public UsersServiceImpl(HeroesService heroesService, UsersRepository usersRepository, HeroesRepository heroesRepository, ModelMapper mapper) {
         this.heroesService = heroesService;
         this.usersRepository = usersRepository;
+        this.heroesRepository = heroesRepository;
         this.mapper = mapper;
     }
 
@@ -25,7 +28,8 @@ public class UsersServiceImpl implements UsersService {
     public void createHeroForUser(String username, HeroCreateServiceModel heroServiceModel) {
         User user = usersRepository.findByUsername(username);
         Hero hero = heroesService.create(heroServiceModel);
-        user.setHero(hero);
-        usersRepository.save(user);
+        hero.setUser(user);
+
+        heroesRepository.saveAndFlush(hero);
     }
 }
