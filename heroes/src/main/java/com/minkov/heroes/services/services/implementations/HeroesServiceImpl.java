@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.models.Slot;
+import com.minkov.heroes.errors.HeroNotFoundException;
 import com.minkov.heroes.services.factories.HeroesFactory;
 import com.minkov.heroes.services.models.HeroCreateServiceModel;
 import com.minkov.heroes.services.models.HeroItemServiceModel;
@@ -30,12 +31,7 @@ public class HeroesServiceImpl implements HeroesService {
 
     @Override
     public HeroDetailsServiceModel getByName(String name) {
-        Optional<Hero> heroOptional = heroesRepository.getByNameIgnoreCase(name);
-        if (heroOptional.isEmpty()) {
-            throw new NullPointerException("No such hero");
-        }
-
-        Hero hero = heroOptional.get();
+        Hero hero = heroesRepository.getByNameIgnoreCase(name).orElseThrow(() -> new HeroNotFoundException("Nqma takuv geroi"));
 
         HeroDetailsServiceModel serviceModel = mapper.map(hero, HeroDetailsServiceModel.class);
 

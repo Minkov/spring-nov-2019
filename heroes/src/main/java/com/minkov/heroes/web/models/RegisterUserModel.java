@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class RegisterUserModel {
+
     private String username;
     private String email;
     private String password;

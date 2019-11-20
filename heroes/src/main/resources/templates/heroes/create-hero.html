@@ -10,7 +10,7 @@
 <main>
     <div class="container">
         <h1 class="text-center">Create hero</h1>
-        <form class="mx-auto w-100 bg-blur" action="/heroes/create" method="post">
+        <form class="mx-auto w-100 bg-blur" th:action="@{/heroes/create}" method="post">
             <div class="form-group">
                 <div class="label-holder textCol d-flex justify-content-center">
                     <label for="name" class="h4 mb-2 text-white">Name</label>
