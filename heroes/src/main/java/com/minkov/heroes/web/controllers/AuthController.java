@@ -50,7 +50,6 @@ public class AuthController {
         return "redirect:/";
     }
 
-
     @PostMapping("/login")
     public String login(@ModelAttribute RegisterUserModel model, HttpSession session) {
         RegisterUserServiceModel serviceModel = mapper.map(model, RegisterUserServiceModel.class);
