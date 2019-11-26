@@ -5,6 +5,7 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <th:block th:include="~{_shared/head}"/>
+<link rel="stylesheet" href="/css/merchant.css">
 <body>
 <th:block th:include="~{_shared/header}"/>
 
@@ -23,75 +24,18 @@
             <th scope="col"></th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>Relentless</td>
-            <td>PADS</td>
-            <td>25</td>
-            <td>22</td>
-            <td>0</td>
-            <td>60</td>
-            <td>
-                <form action="/items/merchant/Relentless" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>DragonScale</td>
-            <td>HELMET</td>
-            <td>15</td>
-            <td>10</td>
-            <td>0</td>
-            <td>40</td>
-            <td>
-                <form action="/items/merchant/DragonScale" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>Wrathfull</td>
-            <td>PAULDRON</td>
-            <td>45</td>
-            <td>30</td>
-            <td>0</td>
-            <td>80</td>
-            <td>
-                <form action="/items/merchant/Wrathfull" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>Furious</td>
-            <td>GAUNTLETS</td>
-            <td>15</td>
-            <td>20</td>
-            <td>0</td>
-            <td>30</td>
-            <td>
-                <form action="/items/merchant/Furious" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>Glorenzelg</td>
-            <td>WEAPON</td>
-            <td>40</td>
-            <td>60</td>
-            <td>80</td>
-            <td>0</td>
-            <td>
-                <form action="/items/merchant/Glorenzelg" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
+        <tbody id="items-table">
         </tbody>
     </table>
 </main>
 <th:block th:include="~{_shared/footer}" />
+<th:block th:include="~{_shared/loader}" />
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="/js/items.js"></script>
+
 </body>
 </html>

@@ -1,9 +1,9 @@
-package com.minkov.heroes.web.controllers;
+package com.minkov.heroes.web.view.controllers;
 
 import com.minkov.heroes.services.models.LoginUserServiceModel;
 import com.minkov.heroes.services.models.auth.RegisterUserServiceModel;
 import com.minkov.heroes.services.services.AuthService;
-import com.minkov.heroes.web.models.RegisterUserModel;
+import com.minkov.heroes.web.view.models.RegisterUserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

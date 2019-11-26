@@ -1,4 +1,4 @@
-package com.minkov.heroes.web.controllers;
+package com.minkov.heroes.web.view.controllers;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -2,7 +2,7 @@ package com.minkov.heroes.config;
 
 import com.minkov.heroes.data.models.Gender;
 import com.minkov.heroes.services.models.HeroCreateServiceModel;
-import com.minkov.heroes.web.models.HeroCreateModel;
+import com.minkov.heroes.web.view.models.HeroCreateModel;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 

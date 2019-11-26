@@ -1,4 +1,4 @@
-package com.minkov.heroes.web.controllers;
+package com.minkov.heroes.web.view.controllers;
 
 import com.minkov.heroes.errors.HeroNotFoundException;
 import com.minkov.heroes.services.models.HeroCreateServiceModel;
@@ -6,10 +6,10 @@ import com.minkov.heroes.services.models.HeroDetailsServiceModel;
 import com.minkov.heroes.services.models.LoginUserServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 import com.minkov.heroes.services.services.UsersService;
-import com.minkov.heroes.web.controllers.base.BaseController;
-import com.minkov.heroes.web.models.HeroCreateModel;
-import com.minkov.heroes.web.models.HeroDetailsViewModel;
-import javassist.NotFoundException;
+import com.minkov.heroes.web.base.BaseController;
+import com.minkov.heroes.web.view.models.HeroCreateModel;
+import com.minkov.heroes.web.view.models.HeroDetailsViewModel;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +19,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/heroes")
+@AllArgsConstructor
 public class HeroesController extends BaseController {
     private final HeroesService heroesService;
     private final ModelMapper mapper;
     private final UsersService usersService;
-
-    public HeroesController(HeroesService heroesService, ModelMapper mapper, UsersService usersService) {
-        this.heroesService = heroesService;
-        this.mapper = mapper;
-        this.usersService = usersService;
-    }
 
     @GetMapping("/details/{name}")
     public ModelAndView getHeroDetails(@PathVariable String name, ModelAndView modelAndView) {

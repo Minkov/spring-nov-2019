@@ -1,4 +1,4 @@
-package com.minkov.heroes.web.models;
+package com.minkov.heroes.web.view.models;
 
 import ch.qos.logback.core.joran.spi.NoAutoStart;
 import lombok.Getter;

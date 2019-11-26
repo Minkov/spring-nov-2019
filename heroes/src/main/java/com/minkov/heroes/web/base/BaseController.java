@@ -1,7 +1,6 @@
-package com.minkov.heroes.web.controllers.base;
+package com.minkov.heroes.web.base;
 
 import com.minkov.heroes.services.models.LoginUserServiceModel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
 
