@@ -1,7 +1,5 @@
 package com.minkov.heroes.web.api.controllers;
 
-import com.minkov.heroes.data.models.Slot;
-import com.minkov.heroes.services.models.ItemServiceModel;
 import com.minkov.heroes.services.services.ItemsService;
 import com.minkov.heroes.web.api.models.ItemResponseModel;
 
@@ -34,7 +32,7 @@ public class ItemsApiController extends BaseController {
 
     @PostMapping("/api/items/{id}")
     public void BuyItem(@PathVariable long id, HttpSession session) {
-        String username getUsername(session);
-        int b = 5;
+        String username = getUsername(session);
+        itemsService.createForUserById(id, username);
     }
 }

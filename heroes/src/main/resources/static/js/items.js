@@ -1,7 +1,7 @@
 const loader = {
     show: () => {
         $('#page-loader').show();
-    }, 
+    },
     hide: () => {
         $('#page-loader').hide();
     },
@@ -57,3 +57,14 @@ $('#items-table').on('submit', '.buy-item-form', function (ev) {
     ev.preventDefault();
     return false;
 });
+
+const API_KEY = 'vOj2aP4GDvKMetSD490cdgCEOM8X5Pc35R7ipLgd';
+
+fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=${API_KEY}`, {
+    method: 'post',
+    body: JSON.stringify({
+        generalSearchInput: 'pizza',
+    })
+})
+    .then(resp => resp.json())
+    .then(x => window.location.reload());

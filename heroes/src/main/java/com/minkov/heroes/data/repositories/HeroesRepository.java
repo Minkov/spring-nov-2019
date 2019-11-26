@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface HeroesRepository extends JpaRepository<Hero, Long> {
     Optional<Hero> getByNameIgnoreCase(String name);
+
+    Optional<Hero> getByUserUsername(String username);
 }
