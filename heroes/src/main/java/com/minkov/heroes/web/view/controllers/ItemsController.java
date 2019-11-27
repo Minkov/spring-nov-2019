@@ -17,5 +17,4 @@ public class ItemsController {
     public String getCreateItemForm() {
         return "items/create-item.html";
     }
-
 }

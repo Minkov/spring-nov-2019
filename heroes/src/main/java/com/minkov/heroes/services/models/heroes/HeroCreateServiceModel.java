@@ -1,4 +1,4 @@
-package com.minkov.heroes.services.models;
+package com.minkov.heroes.services.models.heroes;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

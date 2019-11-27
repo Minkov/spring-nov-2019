@@ -4,7 +4,7 @@ import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.models.User;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.UsersRepository;
-import com.minkov.heroes.services.models.HeroCreateServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 import com.minkov.heroes.services.services.UsersService;
 import org.modelmapper.ModelMapper;

@@ -7,31 +7,32 @@ import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.models.Slot;
 import com.minkov.heroes.errors.HeroNotFoundException;
 import com.minkov.heroes.services.factories.HeroesFactory;
-import com.minkov.heroes.services.models.HeroCreateServiceModel;
-import com.minkov.heroes.services.models.HeroItemServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroItemServiceModel;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.repositories.HeroesRepository;
-import com.minkov.heroes.services.models.HeroDetailsServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroDetailsServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 
 @Service
+@AllArgsConstructor
 public class HeroesServiceImpl implements HeroesService {
     private final HeroesRepository heroesRepository;
     private final HeroesFactory heroesFactory;
     private final ModelMapper mapper;
 
-    public HeroesServiceImpl(HeroesRepository heroesRepository, HeroesFactory heroesFactory, ModelMapper mapper) {
-        this.heroesRepository = heroesRepository;
-        this.heroesFactory = heroesFactory;
-        this.mapper = mapper;
-    }
-
     @Override
     public HeroDetailsServiceModel getByName(String name) {
-        Hero hero = heroesRepository.getByNameIgnoreCase(name).orElseThrow(() -> new HeroNotFoundException("Nqma takuv geroi"));
+        Optional<Hero> heroResult = heroesRepository.getByNameIgnoreCase(name);
+        if(heroResult.isEmpty()) {
+            throw new HeroNotFoundException("Hero with such name does not exist");
+        }
+
+        Hero hero = heroResult.get();
 
         HeroDetailsServiceModel serviceModel = mapper.map(hero, HeroDetailsServiceModel.class);
 

@@ -1,6 +1,6 @@
 package com.minkov.heroes.web.view.controllers;
 
-import com.minkov.heroes.services.models.LoginUserServiceModel;
+import com.minkov.heroes.services.models.auth.LoginUserServiceModel;
 import com.minkov.heroes.services.models.auth.RegisterUserServiceModel;
 import com.minkov.heroes.services.services.AuthService;
 import com.minkov.heroes.web.view.models.RegisterUserModel;

@@ -1,6 +1,8 @@
 package com.minkov.heroes.web.api.controllers;
 
+import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
 import com.minkov.heroes.services.services.ItemsService;
+import com.minkov.heroes.web.api.models.ItemCreateRequestModel;
 import com.minkov.heroes.web.api.models.ItemResponseModel;
 
 import com.minkov.heroes.web.base.BaseController;
@@ -30,9 +32,15 @@ public class ItemsApiController extends BaseController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/api/items/{id}")
-    public void BuyItem(@PathVariable long id, HttpSession session) {
+    @PostMapping("/api/items/add-to-user/{id}")
+    public void buyItem(@PathVariable long id, HttpSession session) {
         String username = getUsername(session);
-        itemsService.createForUserById(id, username);
+        itemsService.addToUserById(id, username);
+    }
+
+    @PostMapping("/api/items")
+    public void create(ItemCreateRequestModel requestModel) {
+        ItemCreateServiceModel serviceModel = mapper.map(requestModel, ItemCreateServiceModel.class);
+        itemsService.create(serviceModel);
     }
 }

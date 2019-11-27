@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.ItemsRepository;
-import com.minkov.heroes.services.models.ItemServiceModel;
+import com.minkov.heroes.services.models.items.ItemServiceModel;
 import com.minkov.heroes.services.services.ItemsService;
 
 @Service
@@ -45,7 +46,7 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public void createForUserById(long id, String username) {
+    public void addToUserById(long id, String username) {
         Optional<Hero> heroResult = heroesRepository.getByUserUsername(username);
         if (heroResult.isEmpty()) {
             throw new NullPointerException("User does not have a hero");
@@ -61,5 +62,11 @@ public class ItemsServiceImpl implements ItemsService {
         hero.getItems().add(item);
 
         heroesRepository.saveAndFlush(hero);
+    }
+
+    @Override
+    public void create(ItemCreateServiceModel serviceModel) {
+        Item item = mapper.map(serviceModel, Item.class);
+        itemsRepository.save(item);
     }
 }

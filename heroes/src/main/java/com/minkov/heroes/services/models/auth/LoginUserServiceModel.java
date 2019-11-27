@@ -1,4 +1,4 @@
-package com.minkov.heroes.services.models;
+package com.minkov.heroes.services.models.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

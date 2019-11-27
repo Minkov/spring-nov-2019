@@ -1,5 +1,6 @@
-package com.minkov.heroes.services.models;
+package com.minkov.heroes.web.api.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,8 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HeroItemServiceModel {
+@AllArgsConstructor
+public class ItemCreateRequestModel {
     private String name;
+    private String slot;
     private int stamina;
     private int strength;
     private int attack;

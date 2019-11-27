@@ -6,7 +6,7 @@ import com.minkov.heroes.data.models.Slot;
 import com.minkov.heroes.data.models.User;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.ItemsRepository;
-import com.minkov.heroes.services.models.ItemServiceModel;
+import com.minkov.heroes.services.models.items.ItemServiceModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -106,7 +106,7 @@ class ItemsServiceImplTest {
 
         assertThrows(
                 NullPointerException.class,
-                () -> service.createForUserById(1, username));
+                () -> service.addToUserById(1, username));
 
     }
 
@@ -121,7 +121,7 @@ class ItemsServiceImplTest {
 
         assertThrows(
                 NullPointerException.class,
-                () -> service.createForUserById(items.get(0).getId(), username));
+                () -> service.addToUserById(items.get(0).getId(), username));
     }
 
     @Test
@@ -138,7 +138,7 @@ class ItemsServiceImplTest {
         Mockito.when(itemsRepository.findById(1L))
                 .thenReturn(Optional.of(items.get(0)));
 
-        service.createForUserById(items.get(0).getId(), username);
+        service.addToUserById(items.get(0).getId(), username);
 
         ArgumentCaptor<Hero> argument = ArgumentCaptor.forClass(Hero.class);
         Mockito.verify(heroesRepository).saveAndFlush(argument.capture());
