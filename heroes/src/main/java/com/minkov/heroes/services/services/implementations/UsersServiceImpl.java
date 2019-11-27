@@ -32,8 +32,8 @@ public class UsersServiceImpl implements UsersService {
         }
 
         Hero hero = heroesService.create(heroServiceModel);
-        user.setHero(hero);
+        hero.setUser(user);
 
-        usersRepository.saveAndFlush(user);
+        heroesRepository.saveAndFlush(hero);
     }
 }
