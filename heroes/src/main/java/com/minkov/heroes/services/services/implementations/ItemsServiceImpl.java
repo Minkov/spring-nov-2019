@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
+import com.minkov.heroes.services.services.validation.ItemsValidationService;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import com.minkov.heroes.services.services.ItemsService;
 public class ItemsServiceImpl implements ItemsService {
     private final ItemsRepository itemsRepository;
     private final HeroesRepository heroesRepository;
+    private final ItemsValidationService itemsValidationService;
     private final ModelMapper mapper;
 
     @Override
@@ -66,6 +68,10 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Override
     public void create(ItemCreateServiceModel serviceModel) {
+        if (!this.itemsValidationService.isValid(serviceModel)) {
+           throw new RuntimeException("Hero is invalid");
+        }
+
         Item item = mapper.map(serviceModel, Item.class);
         itemsRepository.save(item);
     }

@@ -14,8 +14,8 @@ import com.minkov.heroes.data.models.Slot;
 public class ItemCreateServiceModel {
         private String name;
         private Slot slot;
-        private int stamina;
-        private int strength;
         private int attack;
         private int defence;
+        private int stamina;
+        private int strength;
 }
