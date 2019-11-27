@@ -2,10 +2,10 @@ package com.minkov.heroes.services.services.implementations;
 
 import com.minkov.heroes.data.models.User;
 import com.minkov.heroes.data.repositories.UsersRepository;
-import com.minkov.heroes.services.models.LoginUserServiceModel;
+import com.minkov.heroes.services.models.auth.LoginUserServiceModel;
 import com.minkov.heroes.services.models.auth.RegisterUserServiceModel;
 import com.minkov.heroes.services.services.AuthService;
-import com.minkov.heroes.services.services.AuthValidationService;
+import com.minkov.heroes.services.services.validation.AuthValidationService;
 import com.minkov.heroes.services.services.HashingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

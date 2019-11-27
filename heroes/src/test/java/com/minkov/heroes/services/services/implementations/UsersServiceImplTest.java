@@ -7,11 +7,10 @@ import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.UsersRepository;
 import com.minkov.heroes.services.factories.HeroesFactory;
 import com.minkov.heroes.services.factories.base.HeroesFactoryImpl;
-import com.minkov.heroes.services.models.HeroCreateServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 

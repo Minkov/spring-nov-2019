@@ -1,8 +1,8 @@
-package com.minkov.heroes.services.services.implementations;
+package com.minkov.heroes.services.services.validation.base;
 
 import com.minkov.heroes.data.repositories.UsersRepository;
 import com.minkov.heroes.services.models.auth.RegisterUserServiceModel;
-import com.minkov.heroes.services.services.AuthValidationService;
+import com.minkov.heroes.services.services.validation.AuthValidationService;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.minkov.heroes.services.services;
+package com.minkov.heroes.services.services.validation;
 
 import com.minkov.heroes.services.models.auth.RegisterUserServiceModel;
 

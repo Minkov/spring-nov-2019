@@ -1,6 +1,6 @@
 package com.minkov.heroes.web.base;
 
-import com.minkov.heroes.services.models.LoginUserServiceModel;
+import com.minkov.heroes.services.models.auth.LoginUserServiceModel;
 
 import javax.servlet.http.HttpSession;
 

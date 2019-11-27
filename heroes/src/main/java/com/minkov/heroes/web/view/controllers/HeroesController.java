@@ -1,9 +1,9 @@
 package com.minkov.heroes.web.view.controllers;
 
 import com.minkov.heroes.errors.HeroNotFoundException;
-import com.minkov.heroes.services.models.HeroCreateServiceModel;
-import com.minkov.heroes.services.models.HeroDetailsServiceModel;
-import com.minkov.heroes.services.models.LoginUserServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroDetailsServiceModel;
+import com.minkov.heroes.services.models.auth.LoginUserServiceModel;
 import com.minkov.heroes.services.services.HeroesService;
 import com.minkov.heroes.services.services.UsersService;
 import com.minkov.heroes.web.base.BaseController;

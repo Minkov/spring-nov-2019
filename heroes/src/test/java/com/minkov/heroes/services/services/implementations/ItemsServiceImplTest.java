@@ -6,7 +6,10 @@ import com.minkov.heroes.data.models.Slot;
 import com.minkov.heroes.data.models.User;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.ItemsRepository;
-import com.minkov.heroes.services.models.ItemServiceModel;
+import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
+import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
+import com.minkov.heroes.services.models.items.ItemServiceModel;
+import com.minkov.heroes.services.services.validation.ItemsValidationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -26,6 +29,7 @@ class ItemsServiceImplTest {
 
     ItemsRepository itemsRepository;
     HeroesRepository heroesRepository;
+    ItemsValidationService itemsValidationService;
 
     ItemsServiceImpl service;
 
@@ -37,11 +41,12 @@ class ItemsServiceImplTest {
 
         itemsRepository = Mockito.mock(ItemsRepository.class);
         heroesRepository = Mockito.mock(HeroesRepository.class);
+        itemsValidationService = Mockito.mock(ItemsValidationService.class);
 
         Mockito.when(itemsRepository.findAll())
                 .thenReturn(items);
 
-        service = new ItemsServiceImpl(itemsRepository, heroesRepository, mapper);
+        service = new ItemsServiceImpl(itemsRepository, heroesRepository, itemsValidationService, mapper);
     }
 
     @Test
@@ -98,7 +103,7 @@ class ItemsServiceImplTest {
     }
 
     @Test
-    void createForUserById_whenItemDoesNotExist_shouldThrowException() {
+    void addToUserById_whenItemDoesNotExist_shouldThrowException() {
         items.clear();
         String username = "username";
         Mockito.when(itemsRepository.findById(1L))
@@ -106,12 +111,12 @@ class ItemsServiceImplTest {
 
         assertThrows(
                 NullPointerException.class,
-                () -> service.createForUserById(1, username));
+                () -> service.addToUserById(1, username));
 
     }
 
     @Test
-    void createForUserById_whenUserHasNoHero_shouldThrowException() {
+    void addToUserById_whenUserHasNoHero_shouldThrowException() {
         items.clear();
         items.addAll(getItems());
 
@@ -121,11 +126,11 @@ class ItemsServiceImplTest {
 
         assertThrows(
                 NullPointerException.class,
-                () -> service.createForUserById(items.get(0).getId(), username));
+                () -> service.addToUserById(items.get(0).getId(), username));
     }
 
     @Test
-    void createForUserById_whenUserHasHeroAndItemExists_shouldBeSaved() {
+    void addToUserById_whenUserHasHeroAndItemExists_shouldBeSaved() {
         items.clear();
         items.addAll(getItems());
 
@@ -138,7 +143,7 @@ class ItemsServiceImplTest {
         Mockito.when(itemsRepository.findById(1L))
                 .thenReturn(Optional.of(items.get(0)));
 
-        service.createForUserById(items.get(0).getId(), username);
+        service.addToUserById(items.get(0).getId(), username);
 
         ArgumentCaptor<Hero> argument = ArgumentCaptor.forClass(Hero.class);
         Mockito.verify(heroesRepository).saveAndFlush(argument.capture());
@@ -148,6 +153,38 @@ class ItemsServiceImplTest {
         assertEquals(items.get(0).getId(), theHero.getItems().get(0).getId());
     }
 
+    @Test
+    void create_whenItemIsValid_shouldThrow() {
+        ItemCreateServiceModel item = getItemCreateModel();
+
+        Mockito.when(itemsValidationService.isValid(item))
+                .thenReturn(false);
+
+        assertThrows(
+                RuntimeException.class,
+                () -> service.create(item));
+    }
+
+    @Test
+    void create_whenAllIsValid_shouldThrow() {
+        ItemCreateServiceModel itemModel = getItemCreateModel();
+
+        Mockito.when(itemsValidationService.isValid(itemModel))
+                .thenReturn(true);
+
+        service.create(itemModel);
+
+
+        ArgumentCaptor<Item> argument = ArgumentCaptor.forClass(Item.class);
+        Mockito.verify(itemsRepository).save(argument.capture());
+
+        Item item = argument.getValue();
+        assertNotNull(item);
+    }
+
+    private ItemCreateServiceModel getItemCreateModel() {
+        return new ItemCreateServiceModel("Item 1", Slot.PADS, 1, 2, 3, 4);
+    }
 
     private List<Item> getItems() {
         return getItems(2);
