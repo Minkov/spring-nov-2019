@@ -8,6 +8,7 @@ import com.minkov.heroes.services.factories.base.HeroesFactoryImpl;
 import com.minkov.heroes.services.models.heroes.HeroDetailsServiceModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
@@ -58,5 +59,14 @@ class HeroesServiceImplTest {
         HeroDetailsServiceModel heroDetails = service.getByName(heroName);
 
         assertEquals(hero.getName(), heroDetails.getName());
+    }
+
+    @Test
+    void levelUp_whenHeroWon_shouldReturnCorrectLevel() {
+        Hero hero = new Hero();
+        hero.setName("Pesho");
+
+        service.levelUp(hero);
+        assertEquals(hero.getLevel(), 1);
     }
 }

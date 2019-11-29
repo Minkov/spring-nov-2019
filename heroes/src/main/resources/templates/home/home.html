@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html
         lang="en"
@@ -22,39 +21,18 @@
             <th:block th:unless="${session.user.heroName == null}">
                 <h2>User, already have a hero.</h2>
             </th:block>
+            <th:block th:if="${heroes}">
+                <div class="row flex-md-row" th:each="hero : ${heroes}">
+                    <div class="col text-center">
+                        <img th:src="@{'/img/' +${hero.gender} + '.jpg'}" width="150">
+                        <h2 class="text-white" th:text="${hero.name}"></h2>
+                        <a class="btn btn-secondary" th:href="@{'/heroes/fight/' + ${hero.name}}">Fight</a>
+                    </div>
+                </div>
+            </th:block>
         </div>
-
     </div>
 </main>
-
-<th:block th:include="~{_shared/footer}" />
+<th:block th:include="~{_shared/footer}"/>
 </body>
 </html>
-=======
-<!DOCTYPE html>
-<html
-        lang="en"
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org"
->
-<th:block th:include="~{_shared/head}"/>
-<body>
-<th:block th:include="~{_shared/header}"/>
-<main>
-    <div class="text-center mb-3">
-        <h4 class="text-white mt-2">Welcome to the arena, [[${session.user.username}]]</h4>
-    </div>
-    <hr class="my-3"/>
-    <div class="container">
-        <div class="text-center">
-            <h2>User, you don't have a hero. Click below and create one.</h2>
-            <a href="/heroes/create" class="btn btn-secondary">Create hero</a>
-        </div>
-
-    </div>
-</main>
-
-<th:block th:include="~{_shared/footer}" />
-</body>
-</html>
->>>>>>> 0b0472e51ac3e7c6881463536dabd55ffa7e951d

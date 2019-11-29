@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,14 +35,20 @@ public class ItemsApiController extends BaseController {
     }
 
     @PostMapping("/api/items/add-to-user/{id}")
-    public void buyItem(@PathVariable long id, HttpSession session) {
+    public void buyItem(@PathVariable long id, HttpSession session, HttpServletResponse response) throws IOException {
         String username = getUsername(session);
         itemsService.addToUserById(id, username);
+        String heroName = getHeroName(session);
+
+
+        response.sendRedirect("/heroes/details/" + heroName);
     }
 
     @PostMapping("/api/items")
-    public void create(ItemCreateRequestModel requestModel) {
+    public void create(ItemCreateRequestModel requestModel, HttpServletResponse response) throws IOException {
         ItemCreateServiceModel serviceModel = mapper.map(requestModel, ItemCreateServiceModel.class);
         itemsService.create(serviceModel);
+
+        response.sendRedirect("/items/merchant");
     }
 }

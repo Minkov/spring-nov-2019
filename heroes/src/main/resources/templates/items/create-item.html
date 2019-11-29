@@ -10,7 +10,7 @@
 <main class="container">
     <h1 class="text-center">Create Item</h1>
     <hr class="hr-3"/>
-    <form class="mx-auto w-100 bg-blur" action="/items/create" method="post">
+    <form class="mx-auto w-100 bg-blur" th:action="@{/api/items}" method="post">
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
                 <label for="name" class="h4 mb-2 text-white">Name</label>
@@ -21,22 +21,22 @@
             <div class="row flex-md-row">
                 <div class="col col-sm-1"></div>
                 <div class="ml-lg-5">
-                    <img src="/static/img/weapon.jpg" class="border border-secondary" alt="weapon" width="110"
+                    <img th:src="@{/img/weapon.jpg}" class="border border-secondary" alt="weapon" width="110"
                          height="100"/>
                 </div>
                 <div class="ml-lg-5">
-                    <img src="/static/img/helmet.jpg" class="border border-secondary" alt="helmet" width="110"
+                    <img th:src="@{/img/helmet.jpg}" class="border border-secondary" alt="helmet" width="110"
                          height="100"/>
                 </div>
                 <div class="ml-lg-5">
-                    <img src="/static/img/pauldron.jpg" class="border border-secondary" alt="pauldron" width="110"
+                    <img th:src="@{/img/pauldron.jpg}" class="border border-secondary" alt="pauldron" width="110"
                          height="100"/>
                 </div>
                 <div class="ml-lg-5">
-                    <img src="/static/img/pads.jpg" class="border border-secondary" alt="legs" width="110" height="100"/>
+                    <img th:src="@{/img/pads.jpg}" class="border border-secondary" alt="legs" width="110" height="100"/>
                 </div>
                 <div class="ml-lg-5">
-                    <img src="/static/img/gauntlet.jpg" class="border border-secondary" alt="gauntlet" width="110"
+                    <img th:src="@{/img/gauntlet.jpg}" class="border border-secondary" alt="gauntlet" width="110"
                          height="100"/>
                 </div>
             </div>

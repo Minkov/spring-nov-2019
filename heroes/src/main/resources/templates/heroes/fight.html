@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:include="~{_shared/head}"/>
+<body>
+<th:block th:include="~{_shared/header}"/>
+<main>
+    <div class="container">
+        <div class="text-center bg-blur">
+            <h1>Fight</h1>
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img th:src="@{'/img/' + ${currentHero.gender} + '.jpg'}" width="150px" height="250"/>
+                        <h3 class="align-middle" th:text="${currentHero.name}"></h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>VS</h2>
+                        <h2>[[${winner}]] - winner</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <img th:src="@{'/img/' + ${opponent.gender} + '.jpg'}" width="150px" height="250"/>
+                        <h3 class="align-middle"th:text="${opponent.name}"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="~{_shared/footer}"/>
+</body>
+</html>
