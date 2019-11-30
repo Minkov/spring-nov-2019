@@ -1,7 +1,6 @@
 package com.minkov.heroes.services.services.implementations;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.minkov.heroes.data.models.Item;
@@ -28,12 +27,9 @@ public class HeroesServiceImpl implements HeroesService {
 
     @Override
     public HeroDetailsServiceModel getByName(String name) {
-        Optional<Hero> heroResult = heroesRepository.getByNameIgnoreCase(name);
-        if(heroResult.isEmpty()) {
-            throw new HeroNotFoundException("Hero with such name does not exist");
-        }
-
-        Hero hero = heroResult.get();
+        Hero hero = heroesRepository
+                .getByNameIgnoreCase(name)
+                .orElseThrow(() -> new HeroNotFoundException("Hero with such a name does not exist"));
 
         HeroDetailsServiceModel serviceModel = mapper.map(hero, HeroDetailsServiceModel.class);
 
@@ -99,13 +95,11 @@ public class HeroesServiceImpl implements HeroesService {
     }
 
     private HeroItemServiceModel getItemBySlot(List<Item> items, Slot slot) {
-        Optional<Item> item = items
+        return items
                 .stream()
                 .filter(x -> x.getSlot() == slot)
-                .findFirst();
-
-        return item.isPresent()
-                ? mapper.map(item, HeroItemServiceModel.class)
-                : null;
+                .findFirst()
+                .map(item -> mapper.map(item, HeroItemServiceModel.class))
+                .orElse(null);
     }
 }
