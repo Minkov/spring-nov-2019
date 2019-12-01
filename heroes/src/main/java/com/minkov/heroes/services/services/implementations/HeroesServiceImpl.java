@@ -45,7 +45,6 @@ public class HeroesServiceImpl implements HeroesService {
     @Override
     public Hero create(HeroCreateServiceModel serviceModel) {
         Hero hero = heroesFactory.create(serviceModel.getName(), serviceModel.getGender());
-        heroesRepository.save(hero);
         return hero;
     }
 

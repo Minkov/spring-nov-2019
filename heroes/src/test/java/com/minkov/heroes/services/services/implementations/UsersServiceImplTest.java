@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsersServiceImplTest {
@@ -31,7 +33,7 @@ class UsersServiceImplTest {
         heroesFactory = new HeroesFactoryImpl();
         ModelMapper mapper = new ModelMapper();
         heroesService = new HeroesServiceImpl(heroesRepository, heroesFactory, mapper);
-        service = new UsersServiceImpl(heroesService, usersRepository, heroesRepository, mapper);
+        service = new UsersServiceImpl(heroesService, usersRepository);
     }
 
     @Test
@@ -40,7 +42,7 @@ class UsersServiceImplTest {
         user.setUsername("Pesho");
         String heroName = "Gosho";
         Mockito.when(usersRepository.findByUsername(user.getUsername()))
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel(heroName, Gender.MALE);
 
@@ -49,8 +51,15 @@ class UsersServiceImplTest {
         assertEquals(heroName, user.getHero().getName());
     }
 
+    @Test
     public void createHeroForUser_whenUserDoesNOTExist_shouldThrowException() {
+        Mockito.when(usersRepository.findByUsername(Mockito.any()))
+                .thenReturn(Optional.empty());
 
+        HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel("Gosho", Gender.MALE);
+
+        assertThrows(Exception.class, () ->
+                service.createHeroForUser("Pesho", heroToCreate));
     }
 
     @Test
@@ -60,7 +69,7 @@ class UsersServiceImplTest {
         user.setHero(new Hero());
         String heroName = "Gosho";
         Mockito.when(usersRepository.findByUsername(user.getUsername()))
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel(heroName, Gender.MALE);
 
