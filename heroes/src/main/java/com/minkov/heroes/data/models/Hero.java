@@ -1,6 +1,5 @@
 package com.minkov.heroes.data.models;
 
-import com.minkov.heroes.data.models.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "heroes")
-public class Hero extends BaseEntity {
+public class Hero {
+
+    @Id
+    private long id;
+
     @Column(unique = true)
     private String name;
 
@@ -44,8 +47,8 @@ public class Hero extends BaseEntity {
     )
     private List<Item> items;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private User user;
 }
 
