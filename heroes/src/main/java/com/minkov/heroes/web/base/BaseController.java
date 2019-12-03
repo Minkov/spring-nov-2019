@@ -12,4 +12,8 @@ public class BaseController {
     protected String getUsername(HttpSession session) {
         return ((LoginUserServiceModel) session.getAttribute("user")).getUsername();
     }
+
+    protected String getHeroName(HttpSession session) {
+        return ((LoginUserServiceModel) session.getAttribute("user")).getHeroName();
+    }
 }

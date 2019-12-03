@@ -61,4 +61,13 @@ class HeroesServiceTest extends TestBase {
 
         assertEquals(hero.getName(), heroDetails.getName());
     }
+
+    @Test
+    void levelUp_whenHeroWon_shouldReturnCorrectLevel() {
+        Hero hero = new Hero();
+        hero.setName("Pesho");
+
+        service.levelUp(hero);
+        assertEquals(hero.getLevel(), 1);
+    }
 }

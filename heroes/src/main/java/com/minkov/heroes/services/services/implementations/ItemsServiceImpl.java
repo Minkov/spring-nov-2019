@@ -61,9 +61,25 @@ public class ItemsServiceImpl implements ItemsService {
 
         Hero hero = heroResult.get();
         Item item = itemResult.get();
-        hero.getItems().add(item);
 
-        heroesRepository.saveAndFlush(hero);
+        boolean hasItem = false;
+        for (Item currItem: hero.getItems() ) {
+            if (currItem.getSlot() == item.getSlot()) {
+                hasItem = true;
+                break;
+            }
+        }
+
+        if (!hasItem) {
+            hero.getItems().add(item);
+            hero.setStrength(hero.getStrength() + item.getStrength());
+            hero.setStamina(hero.getStamina() + item.getStamina());
+            hero.setAttack(hero.getAttack() + item.getAttack());
+            hero.setDefence(hero.getDefence() + item.getDefence());
+
+            heroesRepository.saveAndFlush(hero);
+        }
+
     }
 
     @Override

@@ -27,12 +27,10 @@ class ItemsApiControllerTest extends ApiTestBase {
         Mockito.when(itemsRepository.findAll())
                 .thenReturn(List.of(item));
 
-        ResponseEntity<ItemResponseModel[]> responseEntity = getRestTemplate()
+        ItemResponseModel[] result = getRestTemplate()
                 .getForObject(
                         getFullUrl("/api/items-all"),
-                        ResponseEntity.class);
-
-        var result = responseEntity.getBody();
+                        ItemResponseModel[].class);
 
         assertEquals(1, result.length);
         assertEquals(item.getId(), result[0].getId());

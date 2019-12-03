@@ -52,6 +52,7 @@ $('#items-table').on('submit', '.buy-item-form', function (ev) {
         .then(data => {
             console.log(data)
             loader.hide();
+            window.location = '/items/merchant';
         });
 
     ev.preventDefault();

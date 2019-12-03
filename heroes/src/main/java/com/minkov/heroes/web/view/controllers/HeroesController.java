@@ -64,6 +64,21 @@ public class HeroesController extends BaseController {
         }
     }
 
+    @GetMapping("/fight/{heroName}")
+    public ModelAndView fight(@PathVariable String heroName, ModelAndView modelAndView ,HttpSession session) {
+        modelAndView.setViewName("heroes/fight");
+
+        HeroDetailsServiceModel currentHero = heroesService.getByName(getHeroName(session));
+        HeroDetailsServiceModel opponent = heroesService.getByName(heroName);
+
+        String winner = heroesService.getWinner(currentHero, opponent);
+
+        modelAndView.addObject("currentHero", currentHero);
+        modelAndView.addObject("opponent", opponent);
+        modelAndView.addObject("winner", winner);
+        return modelAndView;
+    }
+
     @ExceptionHandler(HeroNotFoundException.class)
     public ModelAndView handleException(HeroNotFoundException exception) {
         ModelAndView modelAndView = new ModelAndView("error");

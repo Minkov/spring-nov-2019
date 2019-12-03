@@ -31,13 +31,13 @@ class UsersServiceTest extends TestBase {
 
         HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel(heroName, Gender.MALE);
 
+
         service.createHeroForUser(user.getUsername(), heroToCreate);
 
         assertEquals(heroName, user.getHero().getName());
     }
 
     public void createHeroForUser_whenUserDoesNOTExist_shouldThrowException() {
-
     }
 
     @Test

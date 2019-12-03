@@ -2,6 +2,7 @@ package com.minkov.heroes.services.services.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.models.Slot;
@@ -50,6 +51,51 @@ public class HeroesServiceImpl implements HeroesService {
         Hero hero = heroesFactory.create(serviceModel.getName(), serviceModel.getGender());
         heroesRepository.save(hero);
         return hero;
+    }
+
+    @Override
+    public boolean areThereOpponents() {
+        return heroesRepository.count() > 1;
+    }
+
+    @Override
+    public List<HeroDetailsServiceModel> getOpponents(String heroName) {
+        return heroesRepository.findAll()
+                .stream()
+                .filter(hero -> !hero.getName().equals(heroName))
+                .map(hero -> mapper.map(hero, HeroDetailsServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getWinner(HeroDetailsServiceModel player1
+            , HeroDetailsServiceModel player2) {
+
+        int player1Dmg = player1.getAttack() + player1.getStrength() * 4 -
+                (player2.getDefence() + player2.getStamina() * 2);
+        int player2Dmg = player2.getAttack() + player2.getStrength() * 4 -
+                (player1.getDefence() + player1.getStamina() * 2);
+
+        if (player1Dmg > player2Dmg) {
+            levelUp(heroesRepository
+                    .getByNameIgnoreCase(player1.getName())
+                    .orElseThrow(() -> new HeroNotFoundException("Not such hero")));
+            return player1.getName();
+        } else {
+            levelUp(heroesRepository
+                    .getByNameIgnoreCase(player2.getName())
+                    .orElseThrow(() -> new HeroNotFoundException("Not such hero")));
+            return player2.getName();
+        }
+    }
+
+    @Override
+    public void levelUp(Hero winner) {
+        winner.setLevel(winner.getLevel() + 1);
+        winner.setStamina(winner.getStamina() + 5);
+        winner.setStrength(winner.getStrength() + 5);
+
+        heroesRepository.save(winner);
     }
 
     private HeroItemServiceModel getItemBySlot(List<Item> items, Slot slot) {
