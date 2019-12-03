@@ -8,6 +8,8 @@ import com.minkov.heroes.web.api.models.ItemResponseModel;
 import com.minkov.heroes.web.base.BaseController;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +26,19 @@ public class ItemsApiController extends BaseController {
     private final ModelMapper mapper;
 
     @GetMapping(value = "/api/items")
-    public List<ItemResponseModel> getItems(HttpSession session) throws InterruptedException {
+    public ResponseEntity<List<ItemResponseModel>> getItems(HttpSession session) {
         String username = getUsername(session);
-        return itemsService.getItemsForUser(username)
+        List<ItemResponseModel> result = itemsService.getItemsForUser(username)
+                .stream()
+                .map(item -> mapper.map(item, ItemResponseModel.class))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/api/items-all")
+    public List<ItemResponseModel> getItems() throws InterruptedException {
+        return itemsService.getAll()
                 .stream()
                 .map(item -> mapper.map(item, ItemResponseModel.class))
                 .collect(Collectors.toList());
@@ -39,8 +51,9 @@ public class ItemsApiController extends BaseController {
     }
 
     @PostMapping("/api/items")
-    public void create(ItemCreateRequestModel requestModel) {
+    public ResponseEntity<Void> create(ItemCreateRequestModel requestModel) {
         ItemCreateServiceModel serviceModel = mapper.map(requestModel, ItemCreateServiceModel.class);
         itemsService.create(serviceModel);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 }

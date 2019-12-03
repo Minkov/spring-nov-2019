@@ -1,6 +1,13 @@
 <header>
     <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
-        <a class="navbar-brand text-white h4" href="/static">Heroes</a>
+
+        <th:block th:if="${session.user == null || session.user.username == null}">
+            <a class="navbar-brand text-white h4" href="/">Heroes</a>
+        </th:block>
+
+        <th:block th:unless="${session.user == null || session.user.username == null}">
+            <a class="navbar-brand text-white h4" href="/home">Heroes</a>
+        </th:block>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,9 +15,6 @@
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
                 <th:block th:if="${session.user == null || session.user.username == null}">
-                    <li class="nav-item col-md-4">
-                        <a class="nav-link text-white active h5" href="/home">Home</a>
-                    </li>
                     <li class="nav-item col-md-4">
                         <a class="nav-link text-white active h5" href="/users/login">Login</a>
                     </li>

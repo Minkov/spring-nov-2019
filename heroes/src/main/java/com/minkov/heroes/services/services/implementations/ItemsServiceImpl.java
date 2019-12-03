@@ -75,4 +75,12 @@ public class ItemsServiceImpl implements ItemsService {
         Item item = mapper.map(serviceModel, Item.class);
         itemsRepository.save(item);
     }
+
+    @Override
+    public List<ItemServiceModel> getAll() {
+        return itemsRepository.findAll()
+                .stream()
+                .map(item -> mapper.map(item, ItemServiceModel.class))
+                .collect(Collectors.toList());
+    }
 }

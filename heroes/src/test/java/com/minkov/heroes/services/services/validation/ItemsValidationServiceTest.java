@@ -1,20 +1,17 @@
-package com.minkov.heroes.services.services.validation.base;
+package com.minkov.heroes.services.services.validation;
 
+import com.minkov.heroes.base.TestBase;
 import com.minkov.heroes.data.models.Slot;
 import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
-import com.minkov.heroes.services.services.validation.ItemsValidationService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ItemsValidationServiceImplTest {
+class ItemsValidationServiceTest extends TestBase {
+    @Autowired
     ItemsValidationService service;
-
-    @BeforeEach
-    void setupTest() {
-        service = new ItemsValidationServiceImpl();
-    }
 
     @Test
     void isValid_whenNameIsNull_shouldReturnFalse() {

@@ -1,36 +1,38 @@
-package com.minkov.heroes.services.services.implementations;
+package com.minkov.heroes.services.services;
 
+import com.minkov.heroes.base.TestBase;
 import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.errors.HeroNotFoundException;
 import com.minkov.heroes.services.factories.HeroesFactory;
 import com.minkov.heroes.services.factories.base.HeroesFactoryImpl;
 import com.minkov.heroes.services.models.heroes.HeroDetailsServiceModel;
+import com.minkov.heroes.services.services.HeroesService;
+import com.minkov.heroes.services.services.validation.ItemsValidationService;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HeroesServiceImplTest {
+class HeroesServiceTest extends TestBase {
+    @MockBean
     HeroesRepository heroesRepository;
-    HeroesFactory heroesFactory;
-    ModelMapper mapper;
 
-    HeroesServiceImpl service;
-
-    @BeforeEach
-    void setupTest() {
-        heroesRepository = Mockito.mock(HeroesRepository.class);
-        heroesFactory = new HeroesFactoryImpl();
-        mapper = new ModelMapper();
-
-        service = new HeroesServiceImpl(heroesRepository, heroesFactory, mapper);
-    }
+    @Autowired
+    HeroesService service;
 
     @Test
     void getByName_whenHeroDoesNotExist_shouldThrowHeroNotFoundException() {

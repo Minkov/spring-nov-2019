@@ -1,20 +1,20 @@
-package com.minkov.heroes.services.services.implementations;
+package com.minkov.heroes.services.services;
 
+import com.minkov.heroes.base.TestBase;
 import com.minkov.heroes.data.models.Hero;
 import com.minkov.heroes.data.models.Item;
 import com.minkov.heroes.data.models.Slot;
 import com.minkov.heroes.data.models.User;
 import com.minkov.heroes.data.repositories.HeroesRepository;
 import com.minkov.heroes.data.repositories.ItemsRepository;
-import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
 import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
 import com.minkov.heroes.services.models.items.ItemServiceModel;
 import com.minkov.heroes.services.services.validation.ItemsValidationService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,29 +24,27 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ItemsServiceImplTest {
+class ItemsServiceTest extends TestBase {
     List<Item> items;
 
+    @MockBean
     ItemsRepository itemsRepository;
+
+    @MockBean
     HeroesRepository heroesRepository;
+
+    @MockBean
     ItemsValidationService itemsValidationService;
 
-    ItemsServiceImpl service;
+    @Autowired
+    ItemsService service;
 
-    @BeforeEach
-    void setupTest() {
+    @Override
+    protected void beforeEach() {
         items = new ArrayList<>();
-
-        ModelMapper mapper = new ModelMapper();
-
-        itemsRepository = Mockito.mock(ItemsRepository.class);
-        heroesRepository = Mockito.mock(HeroesRepository.class);
-        itemsValidationService = Mockito.mock(ItemsValidationService.class);
 
         Mockito.when(itemsRepository.findAll())
                 .thenReturn(items);
-
-        service = new ItemsServiceImpl(itemsRepository, heroesRepository, itemsValidationService, mapper);
     }
 
     @Test

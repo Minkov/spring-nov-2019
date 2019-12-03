@@ -1,21 +1,18 @@
-package com.minkov.heroes.services.factories.base;
+package com.minkov.heroes.services.factories;
 
+import com.minkov.heroes.base.TestBase;
 import com.minkov.heroes.data.models.Gender;
 import com.minkov.heroes.data.models.Hero;
-import org.junit.jupiter.api.BeforeEach;
+import com.minkov.heroes.services.base.ServiceTestBase;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static com.minkov.heroes.services.factories.HeroesConstants.*;
 
-class HeroesFactoryImplTest {
-
-    HeroesFactoryImpl factory;
-
-    @BeforeEach
-    void setupTest() {
-        factory = new HeroesFactoryImpl();
-    }
+class HeroesFactoryTest extends ServiceTestBase {
+    @Autowired
+    HeroesFactory factory;
 
     @Test
     void create_withNameAndGender_shouldReturnHeroWithDefaultProps() {
