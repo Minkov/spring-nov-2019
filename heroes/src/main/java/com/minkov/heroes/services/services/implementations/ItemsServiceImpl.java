@@ -1,7 +1,6 @@
 package com.minkov.heroes.services.services.implementations;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.minkov.heroes.services.models.items.ItemCreateServiceModel;
@@ -49,28 +48,19 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Override
     public void addToUserById(long id, String username) {
-        Optional<Hero> heroResult = heroesRepository.getByUserUsername(username);
-        if (heroResult.isEmpty()) {
-            throw new NullPointerException("User does not have a hero");
-        }
+        Hero hero = heroesRepository
+                .getByUserUsername(username)
+                .orElseThrow(() -> new NullPointerException("User does not have a hero"));
 
-        Optional<Item> itemResult = itemsRepository.findById(id);
-        if (itemResult.isEmpty()) {
-            throw new NullPointerException("Item does not exists");
-        }
+        Item item = itemsRepository
+                .findById(id)
+                .orElseThrow(() -> new NullPointerException("Item does not exist"));
 
-        Hero hero = heroResult.get();
-        Item item = itemResult.get();
+        boolean hasFreeSlotForItem = hero.getItems().stream()
+                .map(Item::getSlot)
+                .noneMatch(slot -> slot == item.getSlot());
 
-        boolean hasItem = false;
-        for (Item currItem: hero.getItems() ) {
-            if (currItem.getSlot() == item.getSlot()) {
-                hasItem = true;
-                break;
-            }
-        }
-
-        if (!hasItem) {
+        if (hasFreeSlotForItem) {
             hero.getItems().add(item);
             hero.setStrength(hero.getStrength() + item.getStrength());
             hero.setStamina(hero.getStamina() + item.getStamina());
@@ -79,7 +69,6 @@ public class ItemsServiceImpl implements ItemsService {
 
             heroesRepository.saveAndFlush(hero);
         }
-
     }
 
     @Override

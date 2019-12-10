@@ -11,6 +11,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -27,7 +29,7 @@ class UsersServiceTest extends TestBase {
         user.setUsername("Pesho");
         String heroName = "Gosho";
         Mockito.when(usersRepository.findByUsername(user.getUsername()))
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel(heroName, Gender.MALE);
 
@@ -37,7 +39,15 @@ class UsersServiceTest extends TestBase {
         assertEquals(heroName, user.getHero().getName());
     }
 
+    @Test
     public void createHeroForUser_whenUserDoesNOTExist_shouldThrowException() {
+        Mockito.when(usersRepository.findByUsername(Mockito.any()))
+                .thenReturn(Optional.empty());
+
+        HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel("Gosho", Gender.MALE);
+
+        assertThrows(Exception.class, () ->
+                service.createHeroForUser("Pesho", heroToCreate));
     }
 
     @Test
@@ -47,7 +57,7 @@ class UsersServiceTest extends TestBase {
         user.setHero(new Hero());
         String heroName = "Gosho";
         Mockito.when(usersRepository.findByUsername(user.getUsername()))
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         HeroCreateServiceModel heroToCreate = new HeroCreateServiceModel(heroName, Gender.MALE);
 
