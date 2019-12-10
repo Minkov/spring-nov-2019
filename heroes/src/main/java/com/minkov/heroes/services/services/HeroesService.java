@@ -5,6 +5,7 @@ import com.minkov.heroes.services.models.heroes.HeroCreateServiceModel;
 import com.minkov.heroes.services.models.heroes.HeroDetailsServiceModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface HeroesService {
     HeroDetailsServiceModel getByName(String name);
@@ -18,4 +19,8 @@ public interface HeroesService {
     String getWinner(HeroDetailsServiceModel player1, HeroDetailsServiceModel player2);
 
     void levelUp(Hero winner);
+
+    HeroDetailsServiceModel getByUsername(String username);
+
+    void levelUpHeroes();
 }

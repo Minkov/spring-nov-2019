@@ -29,7 +29,7 @@ public class HeroesServiceImpl implements HeroesService {
     @Override
     public HeroDetailsServiceModel getByName(String name) {
         Optional<Hero> heroResult = heroesRepository.getByNameIgnoreCase(name);
-        if(heroResult.isEmpty()) {
+        if (heroResult.isEmpty()) {
             throw new HeroNotFoundException("Hero with such name does not exist");
         }
 
@@ -68,9 +68,9 @@ public class HeroesServiceImpl implements HeroesService {
     }
 
     @Override
-    public String getWinner(HeroDetailsServiceModel player1
-            , HeroDetailsServiceModel player2) {
-
+    public String getWinner(
+            HeroDetailsServiceModel player1,
+            HeroDetailsServiceModel player2) {
         int player1Dmg = player1.getAttack() + player1.getStrength() * 4 -
                 (player2.getDefence() + player2.getStamina() * 2);
         int player2Dmg = player2.getAttack() + player2.getStrength() * 4 -
@@ -91,11 +91,35 @@ public class HeroesServiceImpl implements HeroesService {
 
     @Override
     public void levelUp(Hero winner) {
-        winner.setLevel(winner.getLevel() + 1);
-        winner.setStamina(winner.getStamina() + 5);
-        winner.setStrength(winner.getStrength() + 5);
+        heroesRepository.save(
+                levelUpHero(winner)
+        );
+    }
 
-        heroesRepository.save(winner);
+    @Override
+    public HeroDetailsServiceModel getByUsername(String username) {
+        Optional<Hero> hero = heroesRepository.getByUserUsername(username);
+        if (hero.isEmpty()) {
+            throw new HeroNotFoundException("Not such hero");
+        }
+
+        return mapper.map(hero.get(), HeroDetailsServiceModel.class);
+    }
+
+    @Override
+    public void levelUpHeroes() {
+        List<Hero> heroes = heroesRepository.findAll()
+                .stream()
+                .map(this::levelUpHero)
+                .collect(Collectors.toList());
+        heroesRepository.saveAll(heroes);
+    }
+
+    private Hero levelUpHero(Hero hero) {
+        hero.setLevel(hero.getLevel() + 1);
+        hero.setStamina(hero.getStamina() + 5);
+        hero.setStrength(hero.getStrength() + 5);
+        return hero;
     }
 
     private HeroItemServiceModel getItemBySlot(List<Item> items, Slot slot) {

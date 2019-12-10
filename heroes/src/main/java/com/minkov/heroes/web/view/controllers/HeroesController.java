@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/heroes")
@@ -39,25 +40,16 @@ public class HeroesController extends BaseController {
 
     @GetMapping("/create")
     public String getCreateHeroForm(HttpSession session) {
-        if(!isAuthenticated(session)) {
-            return "redirect:/users/login";
-        }
         return "heroes/create-hero.html";
     }
 
     @PostMapping("/create")
-    public String createHero(@ModelAttribute HeroCreateModel hero, HttpSession session) {
-        if(!isAuthenticated(session)) {
-            return "/";
-        }
-
-        String username = getUsername(session);
+    public String createHero(@ModelAttribute HeroCreateModel hero, Principal principal) {
+        String username = principal.getName();
 
         HeroCreateServiceModel serviceModel = mapper.map(hero, HeroCreateServiceModel.class);
         try {
             usersService.createHeroForUser(username, serviceModel);
-            LoginUserServiceModel loginUserServiceModel = new LoginUserServiceModel(username, hero.getName());
-            session.setAttribute("user", loginUserServiceModel);
             return "redirect:/heroes/details/" + hero.getName();
         } catch (Exception ex) {
             return "redirect:/heroes/create";

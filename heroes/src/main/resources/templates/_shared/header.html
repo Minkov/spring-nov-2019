@@ -1,11 +1,11 @@
 <header>
     <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
 
-        <th:block th:if="${session.user == null || session.user.username == null}">
+        <th:block th:if="${session.username == null}">
             <a class="navbar-brand text-white h4" href="/">Heroes</a>
         </th:block>
 
-        <th:block th:unless="${session.user == null || session.user.username == null}">
+        <th:block th:unless="${session.username == null}">
             <a class="navbar-brand text-white h4" href="/home">Heroes</a>
         </th:block>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -14,7 +14,7 @@
         </button>
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
-                <th:block th:if="${session.user == null || session.user.username == null}">
+                <th:block th:if="${session.username == null}">
                     <li class="nav-item col-md-4">
                         <a class="nav-link text-white active h5" href="/users/login">Login</a>
                     </li>
@@ -23,10 +23,10 @@
                     </li>
                 </th:block>
 
-                <th:block th:unless="${session.user == null || session.user.username == null}">
+                <th:block th:unless="${session.username == null}">
 
                     <th:block
-                            th:unless="${session.user.heroName == null}">
+                            th:unless="${session.heroName == null}">
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/items/merchant">Merchant</a>
                         </li>
@@ -48,7 +48,7 @@
                     </th:block>
 
                     <th:block
-                            th:if="${session.user.heroName == null}">
+                            th:if="${session.heroName == null}">
                         <li class="nav-item mr-2">
                             <a class="nav-link text-white active h5" href="/items/create">Create Item</a>
                         </li>

@@ -14,10 +14,4 @@ public class UsersController {
     public String getProfile() {
         return "users/profile.html";
     }
-
-    @PostMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/";
-    }
 }
