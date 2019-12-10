@@ -43,9 +43,8 @@ public class HomeController extends BaseController {
         modelAndView.setViewName("home/home");
 
         boolean condition = heroesService.areThereOpponents();
-            List<HeroViewModel> vms =
-                    mappingService.map(heroesService
-////                .getOpponents(getHeroName(session)))
+
+        ////                .getOpponents(getHeroName(session)))
 ////        List<HeroHomeModel> heroes = heroesService
 ////                .getOpponents(getHeroName(session))
 ////                    .stream()
